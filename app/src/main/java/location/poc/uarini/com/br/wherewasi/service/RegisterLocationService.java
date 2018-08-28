@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,7 +78,7 @@ public class RegisterLocationService extends Service {
     private void saveLocation(Location location) {
         final Map<String, Object> user = new HashMap<>();
         user.put("point", new GeoPoint(location.getLatitude(), location.getLongitude()));
-        db.collection("locations").add(user) .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        this.db.collection("locations").add(user) .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
@@ -102,8 +103,10 @@ public class RegisterLocationService extends Service {
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            Log.i(RegisterLocationService.class.getSimpleName(), "onLocationChanged " + location.getProvider() );
+             Log.i(RegisterLocationService.class.getSimpleName(), "onLocationChanged " + location.getProvider() );
             saveLocation(location);
+            Toast.makeText(RegisterLocationService.this, "Registrado", Toast.LENGTH_LONG).show();
+
         }
 
         @Override

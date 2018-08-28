@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        this.findViewById(R.id.btMap).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            }
+        });
         if (!this.hasPermission()) {
             this.requestPermissions();
         }
